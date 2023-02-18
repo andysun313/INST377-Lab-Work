@@ -1,5 +1,57 @@
-<!--
-    Replace this with your working code from Lab 2, and include:
-    - The styles in this folder's `style.css`
-    - The script in script.js, which should be included via a `<script src="script.js" >` call before your closing </body> tag 
--->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Andy Sun Lab 1</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- wrapper -->
+      <header class="header"><h1>Andy's Labs For INST377</h1></header>
+      <div class="container">
+        <div class="left_section box">
+          <!-- Left Inputs-->
+          <h3>Album Names</h3>
+          <ol class="box">
+            <li>Dua Lipa - Future Nostalgia</li>
+            <li>Silk Sonic - An Evening With Silk Sonic</li>
+            <li>Metro Boomin - Heroes & Villains</li>
+            <li>Drake, 21 Savage - Her Loss</li>
+            <li>Muni Long - Public Displays Of Affection</li>
+          </ol>
+        </div>
+        <div class="right_section box">
+          <!--Right Side-->
+          <h3>Image Carousel</h3>
+          <div class="carousel">
+              <button class="prev">prev</button>
+              <div class="slides">
+                <!--Images Box-->
+                <div class="carousel_item visible"><img id="slide_1" src="images/cheesepizza.png" alt="Cheese Pizza" /></div>
+                <div class="carousel_item hidden"><img id="slide_2" src="images/pepperonipizza.jpeg" alt="Pepperoni Pizza" /></div>
+                <div class="carousel_item hidden"><img id="slide_3" src="images/sausagepizza.jpeg" alt="Sausage Pizza" /></div>
+                <div class="carousel_item hidden"><img id="slide_4" src="images/deluxepizza.jpeg" alt="Deluxe Pizza" /></div>
+              </div>
+              <button class="next">next</button>
+          </div>
+          <div class="box">
+            <!--description box-->
+            These are 4 images of rice balls for different types: gif, jpg, png,
+            and svg.
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <a
+        href="http://github.com/andysun313/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >andysun313 Github Org</a
+      >
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
