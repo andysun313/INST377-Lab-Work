@@ -42,17 +42,23 @@ async function mainEvent() {
   const loadDataButton = document.querySelector("#data_load");
   const generateListButton = document.querySelector("#generate");
 
+  const loadAnimation = document.querySelector('#data_load_animation');
+  loadAnimation.style.display = 'none';
+
+
   let currentList = [];
-  loadDataButton.addEventListener("click", async (submitEvent) => {
-    // async has to be declared on every function that needs to "await" something
-    submitEvent.preventDefault(); // This prevents your page from going to http://localhost:3000/api even if your form still has an action set on it
-    console.log("form submission"); // this is substituting for a "breakpoint"
+  loadDataButton.addEventListener("click", async (submitEvent) => { 
+    console.log("Loading Data"); // this is substituting for a "breakpoint"
+    loadAnimation.style.display = 'inline-block';
+
 
     const results = await fetch(
       "https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json"
     );
 
     currentList = await results.json();
+    
+    loadAnimation.style.display = 'none';
     console.table(currentList);
   });
 
@@ -76,9 +82,5 @@ async function mainEvent() {
   })
 }
 
-/*
-  This adds an event listener that fires our main event only once our page elements have loaded
-  The use of the async keyword means we can "await" events before continuing in our scripts
-  In this case, we load some data when the form has submitted
-*/
+
 document.addEventListener("DOMContentLoaded", async () => mainEvent()); // the async keyword means we can make API requests
