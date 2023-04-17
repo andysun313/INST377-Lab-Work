@@ -67,17 +67,6 @@ async function mainEvent() {
 
     loadAnimation.style.display = "none";
    // console.table(storedList);
-
-    console.log("clicked FilterButton");
-
-    const formData = new FormData(form);
-    const formProps = Object.fromEntries(formData);
-
-    console.log(formProps);
-    const newList = filterList(currentList, formProps.resto);
-
-    console.log(newList);
-    injectHTML(newList);
   });
 
   generateListButton.addEventListener("click", (event) => {
