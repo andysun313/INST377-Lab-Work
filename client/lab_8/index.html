@@ -1,0 +1,56 @@
+<!--
+    This is how to build the CSS-only load animation from loading.io    
+    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+
+    This is helpful for showing your client-side users when data is loading,
+    since there's otherwise no sign your app is thinking about something!
+
+    Try placing it at the same level in your element tree as your Submit button
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Andy's Labs for INST377</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <h1>Andy INST377 Labs</h1>
+      </header>
+      <div class="container">
+        <div class="left_section box">
+          <h2>Form Inputs</h2>
+          <form class="box main_form">
+            <button type="button" id="data_load">Load County Data</button>
+            <div>
+              <label for="resto">Filter By Restaurant Name</label>
+              <input type="text" id="resto" name="resto" />
+            </div>
+            <div class="buttons">
+              <button type="button" id="generate">Generate List</button>
+            </div>
+          </form>
+        </div>
+        <div class="right_section box">
+          <h2>Local Restaurant List</h2>
+          <ol class="box" id="restaurant_list">
+            A list of local restaurants
+          </ol>
+          <div class="lds-ellipsis" id="data_load_animation"><div></div><div></div><div></div><div></div></div>
+        </div>
+      </div>
+      <footer class="footer">
+        <a
+          href="http://github.com/andysun313/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >andysun313 Github Org</a
+        >
+      </footer>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
