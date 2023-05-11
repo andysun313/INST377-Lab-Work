@@ -28,7 +28,7 @@ function getRandomIntInclusive(min, max) {
   
   function cutRestaurantList(list) {
     console.log("fired cut list");
-    const range = [...Array(15).keys()];
+    const range = [...Array(4).keys()];
     return (newArray = range.map((item) => {
       const index = getRandomIntInclusive(0, list.length - 1);
       return list[index];
@@ -55,73 +55,30 @@ function getRandomIntInclusive(min, max) {
       }
     });
   
-  array.forEach((item) => {
-      console.log('markerPlace', item);
-      const {coordinates} = item.geocoded_column_1;
-      L.marker([coordinates[1], coordinates[0]]).addTo(map);
-  })
+
+
+    array.forEach((item) => {
+        console.log('markerPlace', item);
+        const {latitude, longitude, human_address } = item.address;
+        L.marker([latitude, longitude]).bindPopup(human_address).addTo(map);
+
+    })
+
   }
   
-  function initChart(target, data, labels) {  
-   const chart = new Chart(target, {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: '# of Votes',
-          data: data,
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-    return chart;
-  }
-
-    function processChartData(data) {
-        const dataForChart = data.reduce((col, item, idx) => {
-
-            if (!col[item.category]) {
-                col[item.category] = 1
-            }
-            else{
-                col[item.category] +=1
-            }
-    
-            return col;
-        }, {})
-    
-        const dataSet = Object.values(dataForChart);
-        const labels = Object.keys(dataForChart);
-    
-        //console.log(dataForChart);
-        return [dataSet, labels];
-    }
-
-    function updateChart(chart, newInfo) {
-        const chartData = processChartData(newInfo);
-        chart.data.labels = chartData[1];
-        chart.data.datasets.forEach((item) => data = chartData[0]);
-        chart.update();
-    }
-
   async function mainEvent() {
     // the async keyword means we can make API requests
+    const form = document.querySelector(".main_form"); // This class name needs to be set on your form before you can listen for an event on it
     const loadDataButton = document.querySelector("#data_load");
     const clearDataButton = document.querySelector("#data_clear");
     const generateListButton = document.querySelector("#generate");
-    const textField = document.querySelector("#list_selector");
-    const chart = document.querySelector('#myChart');
+    const textField = document.querySelector("#resto");
   
     const loadAnimation = document.querySelector("#data_load_animation");
     loadAnimation.style.display = "none";
     generateListButton.classList.add("hidden");
+  
+    const carto = initMap();
   
     const storedData = localStorage.getItem("storedData");
     let parsedData = JSON.parse(storedData);
@@ -130,16 +87,13 @@ function getRandomIntInclusive(min, max) {
     }
   
     let currentList = [];
-
-    const chartData = processChartData(parsedData);
-    const newChart = initChart(chart, chartData[0], chartData[1]);
   
     loadDataButton.addEventListener("click", async (submitEvent) => {
       console.log("Loading Data"); // this is substituting for a "breakpoint"
       loadAnimation.style.display = "inline-block";
   
       const results = await fetch(
-        "https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json"
+        "https://data.princegeorgescountymd.gov/resource/gwq4-iu9d.json"
       );
   
       const storedList = await results.json();
@@ -161,7 +115,7 @@ function getRandomIntInclusive(min, max) {
       currentList = cutRestaurantList(parsedData);
       console.log(currentList);
       injectHTML(currentList);
-      updateChart(newChart, currentList);
+      markerPlace(currentList, carto);
     });
   
     textField.addEventListener("input", (event) => {
@@ -171,12 +125,11 @@ function getRandomIntInclusive(min, max) {
       injectHTML(newList);
     });
   
-    // TODO: add data clear button
-    //clearDataButton.addEventListener("click", (event) => {
-    //  console.log('clear browser data');
-    //  localStorage.clear();
-    //  console.log('localStorage Check', localStorage.getItem("s"))
-   // })
+    clearDataButton.addEventListener("click", (event) => {
+      console.log('clear browser data');
+      localStorage.clear();
+      console.log('localStorage Check', localStorage.getItem("s"))
+    })
   }
   
   document.addEventListener("DOMContentLoaded", async () => mainEvent()); // the async keyword means we can make API requests
