@@ -10,7 +10,7 @@ function getRandomIntInclusive(min, max) {
   
   function injectHTML(list) {
     console.log("fired injectHTML");
-    const target = document.querySelector("#restaurant_list");
+    const target = document.querySelector("#communitycenter_list");
     target.innerHTML = "";
     list.forEach((item) => {
       const str = `<li>${item.name}</li>`;
@@ -26,7 +26,7 @@ function getRandomIntInclusive(min, max) {
     });
   }
   
-  function cutRestaurantList(list) {
+  function cutcommunitycenterList(list) {
     console.log("fired cut list");
     const range = [...Array(4).keys()];
     return (newArray = range.map((item) => {
@@ -66,13 +66,62 @@ function getRandomIntInclusive(min, max) {
 
   }
   
+  function initChart(target, data, labels) {  
+    const chart = new Chart(target, {
+       type: 'bar',
+       data: {
+         labels: labels,
+         datasets: [{
+           label: 'Phone Number',
+           data: data,
+           borderWidth: 1
+         }]
+       },
+       options: {
+         scales: {
+           y: {
+             beginAtZero: true
+           }
+         }
+       }
+     });
+     return chart;
+   }
+
+  function processChartData(data) {
+    const dataForChart = data.reduce((col, item, idx) => {
+
+        if (!col[item.phone_number]) {
+            col[item.phone_number] = 1
+        }
+        else{
+            col[item.phone_number] +=1
+        }
+
+        return col;
+    }, {})
+
+    const dataSet = Object.values(dataForChart);
+    const labels = Object.keys(dataForChart);
+
+    //console.log(dataForChart);
+    return [dataSet, labels];
+   }
+
+   function updateChart(chart, newInfo) {
+    const chartData = processChartData(newInfo);
+    chart.data.labels = chartData[1];
+    chart.data.datasets[0].data = chartData[0];
+    chart.update();
+}
   async function mainEvent() {
     // the async keyword means we can make API requests
     const form = document.querySelector(".main_form"); // This class name needs to be set on your form before you can listen for an event on it
     const loadDataButton = document.querySelector("#data_load");
     const clearDataButton = document.querySelector("#data_clear");
     const generateListButton = document.querySelector("#generate");
-    const textField = document.querySelector("#resto");
+    const textField = document.querySelector("#list_selector");
+    const chart = document.querySelector('#myChart');
   
     const loadAnimation = document.querySelector("#data_load_animation");
     loadAnimation.style.display = "none";
@@ -87,6 +136,9 @@ function getRandomIntInclusive(min, max) {
     }
   
     let currentList = [];
+
+    const chartData = processChartData(parsedData);
+    const newChart = initChart(chart, chartData[0], chartData[1]);
   
     loadDataButton.addEventListener("click", async (submitEvent) => {
       console.log("Loading Data"); // this is substituting for a "breakpoint"
@@ -112,10 +164,11 @@ function getRandomIntInclusive(min, max) {
   
     generateListButton.addEventListener("click", (event) => {
       console.log("generate new list");
-      currentList = cutRestaurantList(parsedData);
+      currentList = cutcommunitycenterList(parsedData);
       console.log(currentList);
       injectHTML(currentList);
       markerPlace(currentList, carto);
+      updateChart(newChart, currentList);
     });
   
     textField.addEventListener("input", (event) => {
@@ -123,6 +176,7 @@ function getRandomIntInclusive(min, max) {
       const newList = filterList(currentList, event.target.value);
       console.log(newList);
       injectHTML(newList);
+      updateChart(newChart, newList);
     });
   
     clearDataButton.addEventListener("click", (event) => {

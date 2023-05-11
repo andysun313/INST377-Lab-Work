@@ -95,7 +95,7 @@
     /* this will push other blocks out of the way */
   
     /* colors */
-    background-color: #f6fafa;
+    background-color: rgb(86, 181, 245);
     color: #4a4a4a;
   
     /* shapes */
@@ -121,7 +121,7 @@
   */
   #map {
     width: 400px;
-    height: 380px;
+    height: 300px;
     margin-bottom: 1rem;
   }
   
@@ -137,14 +137,14 @@
   }
   
   .left_section {
-    background-color: rgba(138, 189, 255, 0.8);
+    background-color: rgb(191, 229, 255);
     flex: 0 1 auto;
     margin: 1rem;
     padding: 1.5rem;
   }
   
   .right_section {
-    background-color: rgba(138, 189, 255, 0.8);
+    background-color: rgb(191, 229, 255);
     flex: 1 2 auto;
     margin: 1rem;
     align-items: center;
@@ -163,7 +163,7 @@
   .footer {
     flex-shrink: 0;
     padding: 1rem;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(86, 181, 245);
     font-size: 1.2rem;
     font-weight: 600;
   
@@ -319,8 +319,10 @@
     .chart-container {
         position: relative; 
         height:40vh; 
-        width:80vw;
+        width: 40vw;
     }
+
+    
    
   
   /* How To Write A Media Query For Small Screens */
